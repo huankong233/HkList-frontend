@@ -11,6 +11,8 @@ import type {
 } from "./types.d";
 import { stringify } from "qs";
 import NProgress from "../progress";
+import { message } from "../message.js";
+import { $t, transformI18n } from "@/plugins/i18n";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -85,6 +87,24 @@ class PureHttp {
         $error.isCancelRequest = Axios.isCancel($error);
         // 关闭进度条动画
         NProgress.done();
+
+        const _message = error.response.data.message;
+
+        if (_message) {
+          if (_message === "用户未登陆") {
+            message(transformI18n($t("axios.needLogin")), { type: "error" });
+          } else if (_message === "Too Many Attempts.") {
+            message(transformI18n($t("axios.tooManyAttempts")), {
+              type: "error"
+            });
+          } else {
+            message(_message, { type: "error" });
+          }
+        } else {
+          message(transformI18n($t("axios.serverError")), { type: "error" });
+          console.log(error);
+        }
+
         // 所有的响应异常 区分来源为取消请求/非取消请求
         return Promise.reject($error);
       }

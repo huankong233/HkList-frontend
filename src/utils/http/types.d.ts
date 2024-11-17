@@ -14,7 +14,7 @@ export type RequestMethods = Extract<
   "get" | "post" | "put" | "delete" | "patch" | "option" | "head"
 >;
 
-export interface PureHttpError extends AxiosError {
+export interface PureHttpError extends AxiosError<{ message?: string }> {
   isCancelRequest?: boolean;
 }
 

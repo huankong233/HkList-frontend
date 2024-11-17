@@ -35,3 +35,7 @@ export type setType = {
   fixedHeader: boolean;
   hiddenSideBar: boolean;
 };
+
+export type userType = {
+  admin_password: string;
+};

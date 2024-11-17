@@ -18,5 +18,6 @@ export type {
   appType,
   multiType,
   cacheType,
-  positionType
+  positionType,
+  userType
 } from "./types";

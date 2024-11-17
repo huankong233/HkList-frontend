@@ -8,7 +8,7 @@ import {
 import { router } from "./index";
 import { isProxy, toRaw } from "vue";
 import { useTimeoutFn } from "@vueuse/core";
-import { cloneDeep, isAllEmpty, intersection } from "@pureadmin/utils";
+import { cloneDeep, isAllEmpty } from "@pureadmin/utils";
 import { buildHierarchyTree } from "@/utils/tree";
 import type { menuType } from "@/layout/types";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
@@ -46,15 +46,6 @@ function filterTree(data: RouteComponent[]) {
     (v: { children }) => v.children && (v.children = filterTree(v.children))
   );
   return newTree;
-}
-
-/** 判断两个数组彼此是否存在相同值 */
-function isOneOfArray(a: Array<string>, b: Array<string>) {
-  return Array.isArray(a) && Array.isArray(b)
-    ? intersection(a, b).length > 0
-      ? true
-      : false
-    : true;
 }
 
 /** 通过指定 `key` 获取父级路径集合，默认 `key` 为 `path` */
@@ -240,7 +231,6 @@ export {
   filterTree,
   getTopMenu,
   addPathMatch,
-  isOneOfArray,
   getHistoryMode,
   getParentPaths,
   findRouteByPath,

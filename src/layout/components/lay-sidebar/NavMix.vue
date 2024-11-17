@@ -93,36 +93,6 @@ watch(
       </el-menu-item>
     </el-menu>
     <div class="horizontal-header-right">
-      <!-- 国际化 -->
-      <el-dropdown id="header-translation" trigger="click">
-        <GlobalizationIcon
-          class="navbar-bg-hover w-[40px] h-[48px] p-[11px] cursor-pointer outline-none"
-        />
-        <template #dropdown>
-          <el-dropdown-menu class="translation">
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'zh')"
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'zh')]"
-              @click="translationCh"
-            >
-              <span v-show="locale === 'zh'" class="check-zh">
-                <IconifyIconOffline :icon="Check" />
-              </span>
-              简体中文
-            </el-dropdown-item>
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'en')"
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'en')]"
-              @click="translationEn"
-            >
-              <span v-show="locale === 'en'" class="check-en">
-                <IconifyIconOffline :icon="Check" />
-              </span>
-              English
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
       <!-- 全屏 -->
       <LaySidebarFullScreen id="full-screen" />
       <!-- 退出登录 -->

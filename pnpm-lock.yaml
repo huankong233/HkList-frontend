@@ -106,8 +106,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(rollup@4.21.0)(vue-i18n@9.14.0(vue@3.4.38(typescript@5.5.4)))
       '@pureadmin/theme':
-        specifier: ^3.3.0
-        version: 3.3.0
+        specifier: 3.2.0
+        version: 3.2.0
       '@types/gradient-string':
         specifier: ^1.1.6
         version: 1.1.6
@@ -806,13 +806,8 @@ packages:
     peerDependencies:
       element-plus: ^2.0.0
 
-  '@pureadmin/theme-utils@0.1.0':
-    resolution: {integrity: sha512-aeFYWS29zaLzVSK4J7AYQP0mHnzDxotNx6orkUvYy//j5LEUrWQTjqlpMZKahribctP/V5dIvXMPfzzhIN+nbA==}
-    engines: {node: '>= 10.13.0'}
-    hasBin: true
-
-  '@pureadmin/theme@3.3.0':
-    resolution: {integrity: sha512-atbzbhcs3SPTuPtWkVlc4HZZrbLNi5h0NtYmfapKBEUu9UBSK2eR6dVfzg8tU89BHO6n36LNDTInUahxgX8b8A==}
+  '@pureadmin/theme@3.2.0':
+    resolution: {integrity: sha512-SBlTvEl0rmfqTW/mOJUPftvZe4yF+38CJdlBOvVITpehzCytqlG5i8XKpcs8aAR9SVfhcrLVS5Q6xh7xDVQcJQ==}
 
   '@pureadmin/utils@2.4.8':
     resolution: {integrity: sha512-7baOiunmno3mlvk7oKIrEvIEVAbJgIrvvMw9EJMOvTmebfn31F5ps9JyIeDzsnVRABZLSEg0iIVVfYe+DGAeqg==}
@@ -1126,6 +1121,11 @@ packages:
 
   '@vueuse/shared@9.13.0':
     resolution: {integrity: sha512-UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==}
+
+  '@zougt/some-loader-utils@1.4.3':
+    resolution: {integrity: sha512-0FsoqSTQ+qOyp6x5Q6LZQ7xVwquEgLYiIStG3L8p0Q2GsGGYKDkOZ0mIpMt67aNdr8XLsbxXjzTl/iHtTz5zcA==}
+    engines: {node: '>= 10.13.0'}
+    hasBin: true
 
   JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -4387,20 +4387,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@pureadmin/theme-utils@0.1.0':
+  '@pureadmin/theme@3.2.0':
     dependencies:
-      cac: 6.7.14
-      color: 4.2.3
-      cssnano: 5.1.15(postcss@8.4.41)
-      cssnano-preset-lite: 2.1.3(postcss@8.4.41)
-      fs-extra: 10.1.0
-      postcss: 8.4.41
-      prettier: 2.8.8
-      uuid: 8.3.2
-
-  '@pureadmin/theme@3.3.0':
-    dependencies:
-      '@pureadmin/theme-utils': 0.1.0
+      '@zougt/some-loader-utils': 1.4.3
       fs-extra: 11.2.0
       string-hash: 1.1.3
 
@@ -4770,6 +4759,17 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+
+  '@zougt/some-loader-utils@1.4.3':
+    dependencies:
+      cac: 6.7.14
+      color: 4.2.3
+      cssnano: 5.1.15(postcss@8.4.41)
+      cssnano-preset-lite: 2.1.3(postcss@8.4.41)
+      fs-extra: 10.1.0
+      postcss: 8.4.41
+      prettier: 2.8.8
+      uuid: 8.3.2
 
   JSONStream@1.3.5:
     dependencies:

@@ -6,7 +6,6 @@ import { message } from "@/utils/message";
 import { loginRules } from "./utils/rule";
 import { useNav } from "@/layout/hooks/useNav";
 import type { FormInstance } from "element-plus";
-import { $t, transformI18n } from "@/plugins/i18n";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { addPathMatch, getTopMenu } from "@/router/utils";
@@ -21,7 +20,6 @@ import darkIcon from "@/assets/svg/dark.svg?component";
 import globalization from "@/assets/svg/globalization.svg?component";
 import Lock from "@iconify-icons/ri/lock-fill";
 import Check from "@iconify-icons/ep/check";
-import User from "@iconify-icons/ri/user-3-fill";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 
 defineOptions({
@@ -37,35 +35,30 @@ initStorage();
 const { t } = useI18n();
 const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
 dataThemeChange(overallStyle.value);
-const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
-const { locale, translationCh, translationEn } = useTranslationLang();
+const { title } = useNav();
 
 const ruleForm = reactive({
-  username: "admin",
-  password: "admin123"
+  admin_password: ""
 });
 
 const onLogin = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      loading.value = true;
-      useUserStoreHook()
-        .loginByPassword({ admin_password: "" })
-        .then(res => {
-          if (res) {
-            // 全部采取静态路由模式
-            usePermissionStoreHook().handleWholeMenus([]);
-            addPathMatch();
-            router.push(getTopMenu(true).path);
-            message(t("login.pureLoginSuccess"), { type: "success" });
-          } else {
-            message(t("login.pureLoginFail"), { type: "error" });
-          }
-        })
-        .finally(() => (loading.value = false));
-    }
+  if (!formEl || !(await formEl.validate())) return;
+
+  loading.value = true;
+
+  const res = await useUserStoreHook().loginByPassword({
+    admin_password: ruleForm.admin_password
   });
+
+  if (res) {
+    // 全部采取静态路由模式
+    usePermissionStoreHook().handleWholeMenus([]);
+    addPathMatch();
+    router.push(getTopMenu(true).path);
+    message(t("login.pureLoginSuccess"), { type: "success" });
+  }
+
+  loading.value = false;
 };
 
 /** 使用公共函数，避免`removeEventListener`失效 */
@@ -96,38 +89,6 @@ onBeforeUnmount(() => {
         :inactive-icon="darkIcon"
         @change="dataThemeChange"
       />
-      <!-- 国际化 -->
-      <el-dropdown trigger="click">
-        <globalization
-          class="hover:text-primary hover:!bg-[transparent] w-[20px] h-[20px] ml-1.5 cursor-pointer outline-none duration-300"
-        />
-        <template #dropdown>
-          <el-dropdown-menu class="translation">
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'zh')"
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'zh')]"
-              @click="translationCh"
-            >
-              <IconifyIconOffline
-                v-show="locale === 'zh'"
-                class="check-zh"
-                :icon="Check"
-              />
-              简体中文
-            </el-dropdown-item>
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'en')"
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'en')]"
-              @click="translationEn"
-            >
-              <span v-show="locale === 'en'" class="check-en">
-                <IconifyIconOffline :icon="Check" />
-              </span>
-              English
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
     </div>
     <div class="login-container">
       <div class="img">
@@ -146,30 +107,10 @@ onBeforeUnmount(() => {
             :rules="loginRules"
             size="large"
           >
-            <Motion :delay="100">
-              <el-form-item
-                :rules="[
-                  {
-                    required: true,
-                    message: transformI18n($t('login.pureUsernameReg')),
-                    trigger: 'blur'
-                  }
-                ]"
-                prop="username"
-              >
-                <el-input
-                  v-model="ruleForm.username"
-                  clearable
-                  :placeholder="t('login.pureUsername')"
-                  :prefix-icon="useRenderIcon(User)"
-                />
-              </el-form-item>
-            </Motion>
-
             <Motion :delay="150">
-              <el-form-item prop="password">
+              <el-form-item prop="admin_password" class="mt-5">
                 <el-input
-                  v-model="ruleForm.password"
+                  v-model="ruleForm.admin_password"
                   clearable
                   show-password
                   :placeholder="t('login.purePassword')"
@@ -180,7 +121,7 @@ onBeforeUnmount(() => {
 
             <Motion :delay="250">
               <el-button
-                class="w-full mt-4"
+                class="w-full"
                 size="default"
                 type="primary"
                 :loading="loading"
