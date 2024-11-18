@@ -3,7 +3,6 @@ import { useI18n } from "vue-i18n";
 import Motion from "./utils/motion";
 import { useRouter } from "vue-router";
 import { message } from "@/utils/message";
-import { loginRules } from "./utils/rule";
 import { useNav } from "@/layout/hooks/useNav";
 import type { FormInstance } from "element-plus";
 import { useLayout } from "@/layout/hooks/useLayout";
@@ -12,14 +11,11 @@ import { addPathMatch, getTopMenu } from "@/router/utils";
 import { bg, avatar, illustration } from "./utils/static";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from "vue";
-import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
-import globalization from "@/assets/svg/globalization.svg?component";
 import Lock from "@iconify-icons/ri/lock-fill";
-import Check from "@iconify-icons/ep/check";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 
 defineOptions({
@@ -44,21 +40,20 @@ const ruleForm = reactive({
 const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl || !(await formEl.validate())) return;
 
-  loading.value = true;
+  try {
+    loading.value = true;
 
-  const res = await useUserStoreHook().loginByPassword({
-    admin_password: ruleForm.admin_password
-  });
+    await useUserStoreHook().loginByPassword({
+      admin_password: ruleForm.admin_password
+    });
 
-  if (res) {
-    // 全部采取静态路由模式
     usePermissionStoreHook().handleWholeMenus([]);
     addPathMatch();
     router.push(getTopMenu(true).path);
     message(t("login.pureLoginSuccess"), { type: "success" });
+  } finally {
+    loading.value = false;
   }
-
-  loading.value = false;
 };
 
 /** 使用公共函数，避免`removeEventListener`失效 */
@@ -101,12 +96,7 @@ onBeforeUnmount(() => {
             <h2 class="outline-none">{{ title }}</h2>
           </Motion>
 
-          <el-form
-            ref="ruleFormRef"
-            :model="ruleForm"
-            :rules="loginRules"
-            size="large"
-          >
+          <el-form ref="ruleFormRef" :model="ruleForm" size="large">
             <Motion :delay="150">
               <el-form-item prop="admin_password" class="mt-5">
                 <el-input

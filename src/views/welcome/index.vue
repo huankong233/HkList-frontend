@@ -1,9 +1,5 @@
-<script setup lang="ts">
-defineOptions({
-  name: "Welcome"
-});
-</script>
-
 <template>
-  <h1>Pure-Admin-Thin（国际化版本）</h1>
+  <h1>HkList后台管理界面</h1>
 </template>
+
+<script setup lang="ts"></script>

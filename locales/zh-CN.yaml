@@ -73,3 +73,28 @@ axios:
   needLogin: 未登录或登录已过期，请重新登录
   tooManyAttempts: 请求次数过多, 请稍后再试
   serverError: 服务器异常, 请稍后再试
+user:
+  name: 解析页面
+admin:
+  token:
+    name: 卡密管理
+    list: 卡密列表
+    add: 添加卡密
+  account:
+    name: 账号管理
+    list: 账号列表
+    add: 添加账号
+  blackList:
+    name: 黑名单管理
+    list: 黑名单列表
+    add: 添加黑名单
+  config:
+    name: 配置管理
+    general:
+      name: 通用配置
+    limit:
+      name: 限制配置
+    mail:
+      name: 邮件配置
+    parse:
+      name: 解析配置

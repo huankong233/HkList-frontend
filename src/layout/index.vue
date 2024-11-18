@@ -13,7 +13,8 @@ import {
   computed,
   onMounted,
   onBeforeMount,
-  defineComponent
+  defineComponent,
+  watch
 } from "vue";
 import {
   useDark,
@@ -29,6 +30,7 @@ import LaySetting from "./components/lay-setting/index.vue";
 import NavVertical from "./components/lay-sidebar/NavVertical.vue";
 import NavHorizontal from "./components/lay-sidebar/NavHorizontal.vue";
 import BackTopIcon from "@/assets/svg/back_top.svg?component";
+import { useRoute, useRouter } from "vue-router";
 
 const { t } = useI18n();
 const appWrapperRef = ref();
@@ -154,10 +156,19 @@ const LayHeader = defineComponent({
     );
   }
 });
+
+const router = useRouter();
+const isUser = ref(location.href.includes("user"));
+watch(
+  () => router.currentRoute.value.fullPath,
+  (toPath: string) => {
+    isUser.value = toPath.includes("user");
+  }
+);
 </script>
 
 <template>
-  <div ref="appWrapperRef" :class="['app-wrapper', set.classes]">
+  <div v-if="!isUser" ref="appWrapperRef" :class="['app-wrapper', set.classes]">
     <div
       v-show="
         set.device === 'mobile' &&
@@ -199,6 +210,7 @@ const LayHeader = defineComponent({
     <!-- 系统设置 -->
     <LaySetting />
   </div>
+  <router-view v-else />
 </template>
 
 <style lang="scss" scoped>

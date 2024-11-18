@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { store, routerArrays, storageLocal, type userType } from "../utils";
 import { useMultiTagsStoreHook } from "./multiTags";
 import { router, resetRouter } from "@/router";
+import { checkPassword } from "@/api/admin/check_password.js";
 
 export const userKey = "admin_password";
 
@@ -13,13 +14,12 @@ export const useUserStore = defineStore({
   actions: {
     /** 登入 */
     async loginByPassword({ admin_password }) {
+      await checkPassword({ admin_password });
       this.admin_password = admin_password;
-      // TODO: 测试有效性
       storageLocal().setItem(userKey, admin_password);
-      return true;
     },
-    /** 前端登出（不调用接口） */
-    logOut() {
+    /** 登出 */
+    logout() {
       useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
       resetRouter();
       storageLocal().setItem(userKey, null);

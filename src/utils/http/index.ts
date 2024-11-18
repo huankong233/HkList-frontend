@@ -13,11 +13,14 @@ import { stringify } from "qs";
 import NProgress from "../progress";
 import { message } from "../message.js";
 import { $t, transformI18n } from "@/plugins/i18n";
+import { localForage } from "../localforage/index.js";
+import { userKey } from "@/store/modules/user.js";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
   // 请求超时时间
   timeout: 10000,
+  baseURL: "/api/v1",
   headers: {
     Accept: "application/json, text/plain, */*",
     "Content-Type": "application/json"
@@ -27,6 +30,12 @@ const defaultConfig: AxiosRequestConfig = {
     serialize: stringify as unknown as CustomParamsSerializer
   }
 };
+
+export interface baseResponse<T> {
+  code: number;
+  message: string;
+  data: T;
+}
 
 class PureHttp {
   constructor() {
@@ -54,6 +63,18 @@ class PureHttp {
         if (PureHttp.initConfig.beforeRequestCallback) {
           PureHttp.initConfig.beforeRequestCallback(config);
           return config;
+        }
+        // 判断接口路径,自动携带 admin_password
+        if (
+          config.url.includes("admin") &&
+          !config.url.includes("check_password")
+        ) {
+          const admin_password = localForage().getItem(userKey);
+          if (config.method === "get") {
+            config.params = { ...config.params, admin_password };
+          } else {
+            config.data = { ...config.data, admin_password };
+          }
         }
         return config;
       },
@@ -117,7 +138,7 @@ class PureHttp {
     url: string,
     param?: AxiosRequestConfig,
     axiosConfig?: PureHttpRequestConfig
-  ): Promise<T> {
+  ): Promise<baseResponse<T>> {
     const config = {
       method,
       url,
@@ -143,8 +164,8 @@ class PureHttp {
     url: string,
     params?: AxiosRequestConfig<P>,
     config?: PureHttpRequestConfig
-  ): Promise<T> {
-    return this.request<T>("post", url, params, config);
+  ) {
+    return this.request<baseResponse<T>>("post", url, params, config);
   }
 
   /** 单独抽离的`get`工具函数 */
@@ -152,8 +173,8 @@ class PureHttp {
     url: string,
     params?: AxiosRequestConfig<P>,
     config?: PureHttpRequestConfig
-  ): Promise<T> {
-    return this.request<T>("get", url, params, config);
+  ) {
+    return this.request<baseResponse<T>>("get", url, params, config);
   }
 }
 
