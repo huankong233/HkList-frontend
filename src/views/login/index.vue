@@ -49,7 +49,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
 
     usePermissionStoreHook().handleWholeMenus([]);
     addPathMatch();
-    router.push(getTopMenu(true).path);
+    router.push("/account/list");
     message(t("login.pureLoginSuccess"), { type: "success" });
   } finally {
     loading.value = false;

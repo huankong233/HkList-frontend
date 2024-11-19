@@ -13,8 +13,8 @@ import { stringify } from "qs";
 import NProgress from "../progress";
 import { message } from "../message.js";
 import { $t, transformI18n } from "@/plugins/i18n";
-import { localForage } from "../localforage/index.js";
 import { userKey } from "@/store/modules/user.js";
+import { storageLocal } from "@pureadmin/utils";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -69,7 +69,7 @@ class PureHttp {
           config.url.includes("admin") &&
           !config.url.includes("check_password")
         ) {
-          const admin_password = localForage().getItem(userKey);
+          const admin_password = storageLocal().getItem(userKey);
           if (config.method === "get") {
             config.params = { ...config.params, admin_password };
           } else {
