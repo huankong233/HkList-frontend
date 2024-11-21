@@ -22,7 +22,7 @@ export const updateConfig = (data: UpdateConfigReq) => {
 };
 
 export interface TestAuthRes {
-  status: boolean;
+  valid: boolean;
   expires_at: string;
 }
 

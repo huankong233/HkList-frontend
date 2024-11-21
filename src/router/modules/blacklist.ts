@@ -1,11 +1,9 @@
-import { $t } from "@/plugins/i18n";
-
 export default {
   path: "/blackList",
   redirect: "/blackList/list",
   meta: {
     icon: "ep:list",
-    title: $t("admin.blackList.name"),
+    title: "黑名单管理",
     rank: 3
   },
   children: [
@@ -14,7 +12,7 @@ export default {
       name: "blackList-list",
       component: () => import("@/views/blackList/list.vue"),
       meta: {
-        title: $t("admin.blackList.list")
+        title: "黑名单列表"
       }
     },
     {
@@ -22,7 +20,7 @@ export default {
       name: "blackList-add",
       component: () => import("@/views/blackList/add.vue"),
       meta: {
-        title: $t("admin.blackList.add")
+        title: "添加黑名单"
       }
     }
   ]

@@ -10,7 +10,9 @@ export interface SelectReq {
     | "switch"
     | "reason"
     | "prov"
-    | "used_at";
+    | "used_at"
+    | "created_at"
+    | "updated_at";
   direction: "asc" | "desc";
 }
 
@@ -164,4 +166,15 @@ export interface RemoveReq {
 /** 删除 */
 export const remove = (data: RemoveReq) => {
   return http.request<null>("delete", "/admin/account", { data });
+};
+
+export interface CheckBanStatusReq {
+  id: number[];
+}
+
+/** 检查账号封禁状态 */
+export const checkBanStatus = (data: CheckBanStatusReq) => {
+  return http.request<null>("post", "/admin/account/check_ban_status", {
+    data
+  });
 };

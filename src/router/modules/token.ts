@@ -1,11 +1,9 @@
-import { $t } from "@/plugins/i18n";
-
 export default {
   path: "/token",
   redirect: "/token/list",
   meta: {
     icon: "ep:key",
-    title: $t("admin.token.name"),
+    title: "卡密管理",
     rank: 2
   },
   children: [
@@ -14,7 +12,7 @@ export default {
       name: "token-list",
       component: () => import("@/views/token/list.vue"),
       meta: {
-        title: $t("admin.token.list")
+        title: "卡密列表"
       }
     },
     {
@@ -22,7 +20,7 @@ export default {
       name: "token-add",
       component: () => import("@/views/token/add.vue"),
       meta: {
-        title: $t("admin.token.add")
+        title: "添加卡密"
       }
     }
   ]

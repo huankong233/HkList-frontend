@@ -1,7 +1,6 @@
 import { http } from "@/utils/http";
 
 export interface GetConfigRes {
-  admin_password: string;
   parse_password: string;
   show_announce: boolean;
   announce: string;
@@ -14,7 +13,6 @@ export const getConfig = () => {
 };
 
 export interface UpdateConfigReq {
-  new_admin_password: string;
   admin_password: string;
   parse_password: string;
   show_announce: boolean;

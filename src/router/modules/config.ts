@@ -1,11 +1,9 @@
-import { $t } from "@/plugins/i18n";
-
 export default {
   path: "/config",
   redirect: "/config/general",
   meta: {
     icon: "mynaui:config",
-    title: $t("admin.config.name"),
+    title: "配置管理",
     rank: 4
   },
   children: [
@@ -14,7 +12,7 @@ export default {
       name: "config-general",
       component: () => import("@/views/config/general.vue"),
       meta: {
-        title: $t("admin.config.general.name")
+        title: "基本配置"
       }
     },
     {
@@ -22,7 +20,7 @@ export default {
       name: "config-limit",
       component: () => import("@/views/config/limit.vue"),
       meta: {
-        title: $t("admin.config.limit.name")
+        title: "限制配置"
       }
     },
     {
@@ -30,7 +28,7 @@ export default {
       name: "config-parse",
       component: () => import("@/views/config/parse.vue"),
       meta: {
-        title: $t("admin.config.parse.name")
+        title: "解析配置"
       }
     },
     {
@@ -38,7 +36,7 @@ export default {
       name: "config-mail",
       component: () => import("@/views/config/mail.vue"),
       meta: {
-        title: $t("admin.config.mail.name")
+        title: "邮件配置"
       }
     }
   ]

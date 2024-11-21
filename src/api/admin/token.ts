@@ -9,7 +9,9 @@ export interface SelectReq {
     | "day"
     | "can_use_ip_count"
     | "ip"
-    | "expires_at";
+    | "expires_at"
+    | "created_at"
+    | "updated_at";
   direction: "asc" | "desc";
 }
 

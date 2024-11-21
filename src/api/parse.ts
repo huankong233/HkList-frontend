@@ -79,9 +79,24 @@ export const getVcode = () => {
   return http.request<GetVcodeRes>("post", "/parse/get_vcode");
 };
 
-export interface GetDownloadLinksReq {}
+export interface GetDownloadLinksReq {
+  randsk: string;
+  uk: number;
+  shareid: number;
+  fs_id: number[];
+  surl: string;
+  dir: string;
+  pwd: string;
+  token: string;
+}
 
-export interface GetDownLoadLinksRes {}
+export type GetDownLoadLinksRes = {
+  message: "请求成功";
+  filename: string;
+  fs_id: number;
+  ua: string;
+  urls?: string[];
+}[];
 
 /** 获取下载链接 */
 export const getDownloadLinks = (data: GetDownloadLinksReq) => {

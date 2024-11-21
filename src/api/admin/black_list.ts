@@ -1,7 +1,13 @@
 import { http } from "@/utils/http";
 
 export interface SelectReq {
-  column: "id" | "type" | "identifier" | "expires_at";
+  column:
+    | "id"
+    | "type"
+    | "identifier"
+    | "expires_at"
+    | "created_at"
+    | "updated_at";
   direction: "asc" | "desc";
 }
 

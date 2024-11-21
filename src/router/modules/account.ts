@@ -1,11 +1,9 @@
-import { $t } from "@/plugins/i18n";
-
 export default {
   path: "/account",
   redirect: "/account/list",
   meta: {
     icon: "mdi:account",
-    title: $t("admin.account.name"),
+    title: "账号管理",
     rank: 1
   },
   children: [
@@ -14,7 +12,7 @@ export default {
       name: "account-list",
       component: () => import("@/views/account/list.vue"),
       meta: {
-        title: $t("admin.account.list")
+        title: "账号列表"
       }
     },
     {
@@ -22,7 +20,7 @@ export default {
       name: "account-add",
       component: () => import("@/views/account/add.vue"),
       meta: {
-        title: $t("admin.account.add")
+        title: "添加账号"
       }
     }
   ]
