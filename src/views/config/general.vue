@@ -74,11 +74,7 @@ const formData = ref<UpdateConfigReq>({
   custom_button: ""
 });
 
-const rules: FormRules = {
-  new_admin_password: [
-    { required: true, message: "管理员密码不能为空", trigger: "blur" }
-  ]
-};
+const rules: FormRules = {};
 
 const getForm = async () => {
   formData.value = { ...(await getConfig()).data, new_admin_password: "" };
