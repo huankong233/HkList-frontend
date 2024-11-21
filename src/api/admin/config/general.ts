@@ -13,7 +13,7 @@ export const getConfig = () => {
 };
 
 export interface UpdateConfigReq {
-  admin_password: string;
+  new_admin_password: string;
   parse_password: string;
   show_announce: boolean;
   announce: string;

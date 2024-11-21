@@ -7,9 +7,9 @@
       :rules="rules"
       label-width="120px"
     >
-      <el-form-item prop="admin_password" label="新管理员密码">
+      <el-form-item prop="new_admin_password" label="新管理员密码">
         <el-input
-          v-model="formData.admin_password"
+          v-model="formData.new_admin_password"
           type="password"
           clearable
           show-password
@@ -67,7 +67,7 @@ import type { FormInstance, FormRules } from "element-plus";
 const ruleFormRef = ref<FormInstance>();
 
 const formData = ref<UpdateConfigReq>({
-  admin_password: "",
+  new_admin_password: "",
   parse_password: "",
   show_announce: false,
   announce: "",
@@ -75,13 +75,13 @@ const formData = ref<UpdateConfigReq>({
 });
 
 const rules: FormRules = {
-  admin_password: [
+  new_admin_password: [
     { required: true, message: "管理员密码不能为空", trigger: "blur" }
   ]
 };
 
 const getForm = async () => {
-  formData.value = { ...(await getConfig()).data, admin_password: "" };
+  formData.value = { ...(await getConfig()).data, new_admin_password: "" };
 };
 
 const handleSubmit = async (formEl: FormInstance | undefined) => {
